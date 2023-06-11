@@ -1,0 +1,44 @@
+﻿@model IEnumerable<SM.Business.Models.StoreModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+    body {
+        background-image: url('/images/foto.jpg');
+        background-size: cover;
+    }
+
+    .title-text {
+        color: white;
+    }
+</style>
+
+<h1 class="text-center title-text">Mağaza Yönetim Sistemi</h1>
+
+<p class="mt-lg-5">
+    <a asp-action ="Create" class="add-store">Mağaza Ekle</a>
+</p>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-sm-3" style="margin-bottom: 15px;">
+            <div class="card">
+                <div class="card-header">@item.Name</div>
+                <div class="card-body">
+                    <div class="card-text">@item.Description</div>
+                    <div class="card-text">@item.Location </div>
+                    @Html.ActionLink("Ürünler", "Index", "Product",
+                new { storeId = item.Id },
+                new { @class = "btn btn-primary" })
+                    <div class="card-footer">
+                        @Html.ActionLink("Düzenle", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Sil", "Delete", new { id = item.Id })
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

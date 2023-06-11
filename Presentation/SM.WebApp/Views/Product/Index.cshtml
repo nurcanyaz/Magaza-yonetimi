@@ -1,0 +1,75 @@
+﻿@model IEnumerable<SM.Business.Models.ProductModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    body {
+        background-image: url('/images/foto.jpg');
+        background-size: cover;
+    }
+
+</style>
+
+<h2 class="edit-title">@ViewBag.StoreName Ürünleri</h2>
+
+
+<form asp-action="Index" method="get">
+    <div class="input-group mt-5">
+        <input type="hidden" name="storeId" value="@ViewBag.StoreId" />
+        <input type="text" placeholder="Ürün Ara..." name="search" class="form-control" value="@ViewBag.SearchTerm" />
+        <input type="submit" value="Search" class="btn btn-primary" />
+    </div>
+</form>
+
+<p class="mt-5">
+    <a asp-action="Create" asp-route-storeId="@ViewBag.StoreId" class="return-link">Ürün Ekle </a>
+</p>
+<table class="table ">
+    <thead class="table-success">
+        <tr>
+            <th >
+             @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                Images
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+             <tr>
+                    <td>
+                        <span class="table-text">@Html.DisplayFor(modelItem => item.Id)</span>
+                    </td>
+                    <td>
+                        <span class="table-text">@Html.DisplayFor(modelItem => item.Name)</span>
+                        <div>
+                            Its location is
+                            <span class="table-text">@Html.DisplayFor(modelItem => item.Location)</span>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="table-text">@Html.DisplayFor(modelItem => item.Description)</span>
+                    </td>
+                    <td>
+                        @foreach (var singleImage in item.Artifacts)
+                        {
+                            <img src="@singleImage.Path" alt="@singleImage.Name" width="150px" />
+                        }
+                    </td>
+            <td>
+                    @Html.ActionLink("Düzenle", "Edit", new { id = item.Id,storeId = item.StoreId }) |
+                @Html.ActionLink("Sil", "Delete", new { id=item.Id, storeId = item.StoreId })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
