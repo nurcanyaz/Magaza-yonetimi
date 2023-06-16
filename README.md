@@ -1,1 +1,1 @@
-# ShopsManagement
+# Magaza-yonetimi
